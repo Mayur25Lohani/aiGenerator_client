@@ -62,7 +62,7 @@ const Login = () => {
         <Typography varient="h3">Login</Typography>
 
         <TextField
-          label="email"
+          label="Email"
           type="email"
           required
           margin="normal"
@@ -74,7 +74,7 @@ const Login = () => {
         />
 
         <TextField
-          label="password"
+          label="Password"
           type="password"
           required
           margin="normal"

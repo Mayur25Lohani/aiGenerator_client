@@ -61,7 +61,7 @@ const Register = () => {
       <form onSubmit={handleSubmit}>
         <Typography varient="h3">Sign Up</Typography>
         <TextField
-          label="username"
+          label="Username"
           required
           margin="normal"
           fullWidth
@@ -72,7 +72,7 @@ const Register = () => {
         />
 
         <TextField
-          label="email"
+          label="Email"
           type="email"
           required
           margin="normal"
@@ -84,7 +84,7 @@ const Register = () => {
         />
 
         <TextField
-          label="password"
+          label="Password"
           type="password"
           required
           margin="normal"

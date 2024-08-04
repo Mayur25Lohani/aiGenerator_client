@@ -1,45 +1,53 @@
 import React from "react";
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography, useTheme, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
-const Navbar = () => {
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+
+const Navbar = ({ toggleDarkMode, darkMode }) => {
   const theme = useTheme();
   const loggedIn = JSON.parse(localStorage.getItem("authToken"));
   const navigate = useNavigate();
 
-  //handle Logout
-  const handleLogout = async() => {
-    try{
+  // Handle Logout
+  const handleLogout = async () => {
+    try {
       await axios.post('/api/v1/auth/logout');
       localStorage.removeItem('authToken');
       toast.success('Logged out Successfully!');
       navigate("/login")
-    }
-    catch(error){
+    } catch (error) {
       console.log(error)
     }
   }
+
   return (
     <Box
       width={"100%"}
       backgroundColor={theme.palette.background.alt}
-      p="1 rem 6%"
+      p="1rem 6%"
       textAlign={"center"}
-      sx={{ boxShadow: 3, mb: 2 }}
+      sx={{ boxShadow: 3, mb: 2, position: 'relative' }}
     >
       <Typography variant="h1" color={"primary"} fontWeight="bold">
-        AI Generator
+        KraftySoul.ai
       </Typography>
+      <Box sx={{ position: 'absolute', right: '20px', top: '20px', display: 'flex', alignItems: 'center' }}>
+        <IconButton color="inherit" onClick={toggleDarkMode} sx={{ fontSize: '2rem' }}>
+          {darkMode ? <Brightness7Icon fontSize="inherit" /> : <Brightness4Icon fontSize="inherit" />}
+        </IconButton>
+      </Box>
       {loggedIn ? (
         <>
-        <NavLink to="/" p={1}>
-          Home
-        </NavLink>
-        <NavLink to="/login" onClick={handleLogout} p={1}>
-          Logout
-        </NavLink>
+          <NavLink to="/" p={1}>
+            Home
+          </NavLink>
+          <NavLink to="/login" onClick={handleLogout} p={1}>
+            Logout
+          </NavLink>
         </>
       ) : (
         <>

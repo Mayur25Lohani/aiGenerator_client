@@ -9,12 +9,14 @@ body {
 }
 
 a {
-  color: #60bf70 !important;
+  color: #03e6a2 !important;
   text-decoration: none;
   padding: 20px;
   margin-top: 20px;
+  font-size: 15px;
+  font-weight: 500;
 }
 
 a:hover {
-  color: black !important;
+  color: #00c3ff !important;
 }

@@ -17,115 +17,84 @@ import {
 const Paragraph = () => {
   const theme = useTheme();
   const navigate = useNavigate();
-  //media
   const isNotMobile = useMediaQuery("(min-width: 1000px)");
-  // states
-  const [text, settext] = useState("");
+  const [text, setText] = useState("");
   const [para, setPara] = useState("");
   const [error, setError] = useState("");
 
-  //register ctrl
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("/api/v1/huggingFace/paragraph", { text });
-      console.log(data);
+      const { data } = await axios.post("/api/v1/openai/paragraph", { inputs: text });
       setPara(data);
     } catch (err) {
-      console.log(error);
-      if (err.response.data.error) {
-        setError(err.response.data.error);
-      } else if (err.message) {
-        setError(err.message);
-      }
-      setTimeout(() => {
-        setError("");
-      }, 5000);
+      console.log(err);
+      setError(err.response?.data?.error || err.message || "An error occurred");
+      setTimeout(() => setError(""), 5000);
     }
   };
+
   return (
     <Box
-      width={isNotMobile ? "40%" : "80%"}
-      p={"2rem"}
-      m={"2rem auto"}
-      borderRadius={5}
-      sx={{ boxShadow: 5 }}
-      backgroundColor={theme.palette.background.alt}
+      width={isNotMobile ? "50%" : "90%"}
+      p={4}
+      m="auto"
+      borderRadius={3}
+      sx={{ boxShadow: 3 }}
+      backgroundColor={theme.palette.background.paper}
     >
-      <Collapse in={error}>
+      <Collapse in={!!error}>
         <Alert severity="error" sx={{ mb: 2 }}>
           {error}
         </Alert>
       </Collapse>
       <form onSubmit={handleSubmit}>
-        <Typography variant="h3">Generate Paragraph</Typography>
-
+        <Typography variant="h4" gutterBottom>
+          Generate Paragraph
+        </Typography>
         <TextField
-          placeholder="Add your text"
+          placeholder="Enter your text here..."
           type="text"
-          multiline={true}
+          multiline
           required
-          margin="normal"
           fullWidth
           value={text}
-          onChange={(e) => {
-            settext(e.target.value);
-          }}
+          onChange={(e) => setText(e.target.value)}
+          sx={{ mb: 2 }}
         />
-
         <Button
           type="submit"
           fullWidth
           variant="contained"
           size="large"
-          sx={{ color: "white", mt: 2 }}
+          sx={{ mb: 2, color: theme.palette.primary.contrastText, backgroundColor: theme.palette.primary.main }}
         >
           Generate
         </Button>
-        <Typography mt={2}>
-          Not this Tool?<Link to="/">Return to Homepage</Link>
+        <Typography align="center">
+          Not this Tool? <Link to="/">Return to Homepage</Link>
         </Typography>
       </form>
 
-      {para ? (
-        <Card
-          sx={{
-            mt: 4,
-            border: 1,
-            boxShadow: 0,
-            height: "500px",
-            borderRadius: 5,
-            borderColor: "natural.medium",
-            bgcolor: "background.default",
-          }}
+      <Card
+        sx={{
+          mt: 4,
+          border: `1px solid ${theme.palette.divider}`,
+          borderRadius: 2,
+          p: 2,
+          height: "auto",
+          minHeight: "200px",
+          bgcolor: theme.palette.background.default,
+          boxShadow: 1,
+        }}
+      >
+        <Typography
+          variant="body1"
+          sx={{ textAlign: "justify", color: theme.palette.text.primary }}
         >
-          <Typography p={2}>{para}</Typography>
-        </Card>
-      ) : (
-        <Card
-          sx={{
-            mt: 4,
-            border: 1,
-            boxShadow: 0,
-            height: "500px",
-            borderRadius: 5,
-            borderColor: "natural.medium",
-            bgcolor: "background.default",
-          }}
-        >
-          <Typography
-            variant="h5"
-            color="natural.main"
-            sx={{
-              textAlign: "center",
-              verticalAlign: "middel",
-              lineHeight: "450px",
-            }}
-          >
-            Your Paragraph Will Appear Here
-          </Typography>
-        </Card>
-      )}
+          {para || "Your paragraph will appear here"}
+        </Typography>
+      </Card>
     </Box>
   );
 };
