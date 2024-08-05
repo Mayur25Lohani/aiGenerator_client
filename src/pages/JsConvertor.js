@@ -25,7 +25,7 @@ const JsConvertor = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("/api/v1/openai/js-converter", {
+      const { data } = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/v1/openai/js-converter`, {
         inputs: text,
       });
       setCode(data);

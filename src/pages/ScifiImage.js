@@ -24,7 +24,7 @@ const ScifiImage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("/api/v1/openai/scifi-image", { inputs: text });
+      const { data } = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/v1/openai/scifi-image`, { inputs: text });
       setImage(data);
     } catch (err) {
       console.log(err);

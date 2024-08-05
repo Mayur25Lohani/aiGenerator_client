@@ -15,7 +15,7 @@ const Navbar = ({ toggleDarkMode, darkMode }) => {
   // Handle Logout
   const handleLogout = async () => {
     try {
-      await axios.post('/api/v1/auth/logout');
+      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/v1/auth/logout`);
       localStorage.removeItem('authToken');
       toast.success('Logged out Successfully!');
       navigate("/login")

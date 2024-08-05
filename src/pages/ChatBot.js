@@ -25,7 +25,7 @@ const ChatBot = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("/api/v1/openai/chatbot", { inputs: text });
+      const { data } = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/v1/openai/chatbot`, { inputs: text });
       setResponse(data);
     } catch (err) {
       console.log(err);

@@ -25,7 +25,7 @@ const Summary = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("/api/v1/openai/summary", { inputs: text });
+      const { data } = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/v1/openai/summary`, { inputs: text });
       setSummary(data);
     } catch (err) {
       console.log(err);
